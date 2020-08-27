@@ -5,7 +5,10 @@ services:
       volumes:
         - ./tmp/db:/var/lib/postgresql/data
       environment:
+        POSTGRES_USER: postgres
         POSTGRES_PASSWORD: password
+      ports:
+        - '5432:5432'
 
     redis:
         image: redis:3.2.8
@@ -24,7 +27,7 @@ services:
         - .:/app
       ports:
         - "3000:3000"
-      command: bin/rails server --port 3000 --binding 0.0.0.0
+      entrypoint: /app/entrypoint.sh
       depends_on:
         - pg
         - redis
