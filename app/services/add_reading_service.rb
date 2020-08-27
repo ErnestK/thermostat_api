@@ -49,7 +49,7 @@ class AddReadingService
   end
 
   def validate_temperature
-    if battery_charge >= MIN_TEMPERATURE && battery_charge <= MAX_TEMPERATURE
+    if @temperature.to_f >= MIN_TEMPERATURE && @temperature.to_f <= MAX_TEMPERATURE
       Success(true)
     else
       Failure("Temperature must be between #{MIN_TEMPERATURE} and #{MAX_TEMPERATURE}, corrupt temperature: #{@temperature}")
@@ -57,7 +57,7 @@ class AddReadingService
   end
 
   def validate_humidity
-    if battery_charge >= MIN_HUMIDITY && battery_charge <= MAX_HUMIDITY
+    if @humidity.to_f >= MIN_HUMIDITY && @humidity.to_f <= MAX_HUMIDITY
       Success(true)
     else
       Failure("Humidity charge must be between #{MIN_HUMIDITY} and #{MAX_HUMIDITY}, corrupt humidity: #{@humidity}")
@@ -65,7 +65,7 @@ class AddReadingService
   end
 
   def validate_battery_charge
-    if battery_charge >= MIN_BATTERY_CHARGE && battery_charge <= MAX_BATTERY_CHARGE
+    if @battery_charge.to_f >= MIN_BATTERY_CHARGE && @battery_charge.to_f <= MAX_BATTERY_CHARGE
       Success(true)
     else
       Failure("Battery charge must be between #{MIN_BATTERY_CHARGE} and #{MAX_BATTERY_CHARGE}, corrupt battery charge: #{@battery_charge}")
@@ -83,7 +83,7 @@ class AddReadingService
     )
 
     Success(true)
-  rescue ex
+  rescue StandardError => ex
     Failure("Exception, during write data to DB: #{ex.message}")
   end
 end
