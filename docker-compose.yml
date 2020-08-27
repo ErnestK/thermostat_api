@@ -18,6 +18,16 @@ services:
         volumes:
           - 'redis_data:/redis/data'
 
+    app:
+      build: .
+      volumes:
+        - .:/app
+      ports:
+        - "3000:3000"
+      command: bin/rails server --port 3000 --binding 0.0.0.0
+      depends_on:
+        - pg
+        - redis
 
 volumes:
   redis_data:
