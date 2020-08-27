@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'bin/*'
+  NewCops: disable
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*
