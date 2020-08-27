@@ -11,10 +11,12 @@ Thermostat.create(household_token: '2', location: 'baker street 1, apt 2')
 Thermostat.create(household_token: '3', location: 'baker street 1, apt 3')
 
 AddReadingService.new(
-  id: 1,
-  number: 1,
-  household_token: thermostat_1.household_token,
-  temperature: '6',
-  humidity: '78',
-  battery_charge: '12'
+  ReadingValue.new(
+    id: 1,
+    number: 1,
+    household_token: thermostat_1.household_token,
+    temperature: '6',
+    humidity: '78',
+    battery_charge: '12'
+  )
 ).call
