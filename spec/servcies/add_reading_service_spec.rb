@@ -5,22 +5,22 @@ require 'rails_helper'
 RSpec.describe AddReadingService, '#call' do
   include Dry::Monads[:result]
 
-  let(:valid_hash_params) do
-    {
+  let(:valid_reading_value) do
+    ReadingValue.new(
       id: 1,
       number: 1,
       household_token: '1',
       temperature: 1,
       humidity: 1,
       battery_charge: 1,
-    }
+    )
   end
 
   context 'when all data is correct' do
     it 'Add new data in table' do
       create(:thermostat)
 
-      result = AddReadingService.new(valid_hash_params).call
+      result = AddReadingService.new(valid_reading_value).call
 
       expect(result).to eq Success(true)
       expect(Reading.count).to eq 1
@@ -29,7 +29,7 @@ RSpec.describe AddReadingService, '#call' do
 
   context 'when thermostat with id not exist' do
     it 'Return failure with message' do
-      result = AddReadingService.new(valid_hash_params).call
+      result = AddReadingService.new(valid_reading_value).call
 
       expect(result).to eq Failure("Thermostat with that token no found, missing household_token: 1")
     end
@@ -38,7 +38,9 @@ RSpec.describe AddReadingService, '#call' do
   context 'when temperature invalid' do
     it 'return failure with message' do
       create(:thermostat)
-      result = AddReadingService.new(valid_hash_params.merge(temperature: 29_299)).call
+      valid_reading_value.temperature = 29_299
+
+      result = AddReadingService.new(valid_reading_value).call
 
       expect(result).to eq Failure("Temperature must be between -200 and 200, corrupt temperature: 29299")
     end
@@ -47,7 +49,9 @@ RSpec.describe AddReadingService, '#call' do
   context 'when humidity invalid' do
     it 'return failure with message' do
       create(:thermostat)
-      result = AddReadingService.new(valid_hash_params.merge(humidity: 991)).call
+      valid_reading_value.humidity = 991
+
+      result = AddReadingService.new(valid_reading_value).call
 
       expect(result).to eq Failure("Humidity charge must be between -100 and 100, corrupt humidity: 991")
     end
@@ -56,7 +60,9 @@ RSpec.describe AddReadingService, '#call' do
   context 'when battery_charge invalid' do
     it 'return failure with message' do
       create(:thermostat)
-      result = AddReadingService.new(valid_hash_params.merge(battery_charge: -29_299)).call
+      valid_reading_value.battery_charge = -29_299
+
+      result = AddReadingService.new(valid_reading_value).call
 
       expect(result).to eq Failure("Battery charge must be between 0 and 100, corrupt battery charge: -29299")
     end

@@ -13,12 +13,7 @@ class AddReadingService
   MIN_BATTERY_CHARGE = 0
   MAX_BATTERY_CHARGE = 100
 
-  option :id
-  option :number
-  option :household_token
-  option :temperature
-  option :humidity
-  option :battery_charge
+  param :reading_value
 
   def call
     validate_data.bind do
@@ -41,45 +36,45 @@ class AddReadingService
   end
 
   def validate_thermostat
-    if Thermostat.exists?(household_token: @household_token)
+    if Thermostat.exists?(household_token: @reading_value.household_token)
       Success(true)
     else
-      Failure("Thermostat with that token no found, missing household_token: #{@temperature}")
+      Failure("Thermostat with that token no found, missing household_token: #{@reading_value.household_token}")
     end
   end
 
   def validate_temperature
-    if @temperature.to_f >= MIN_TEMPERATURE && @temperature.to_f <= MAX_TEMPERATURE
+    if @reading_value.temperature.to_f >= MIN_TEMPERATURE && @reading_value.temperature.to_f <= MAX_TEMPERATURE
       Success(true)
     else
-      Failure("Temperature must be between #{MIN_TEMPERATURE} and #{MAX_TEMPERATURE}, corrupt temperature: #{@temperature}")
+      Failure("Temperature must be between #{MIN_TEMPERATURE} and #{MAX_TEMPERATURE}, corrupt temperature: #{@reading_value.temperature}")
     end
   end
 
   def validate_humidity
-    if @humidity.to_f >= MIN_HUMIDITY && @humidity.to_f <= MAX_HUMIDITY
+    if @reading_value.humidity.to_f >= MIN_HUMIDITY && @reading_value.humidity.to_f <= MAX_HUMIDITY
       Success(true)
     else
-      Failure("Humidity charge must be between #{MIN_HUMIDITY} and #{MAX_HUMIDITY}, corrupt humidity: #{@humidity}")
+      Failure("Humidity charge must be between #{MIN_HUMIDITY} and #{MAX_HUMIDITY}, corrupt humidity: #{@reading_value.humidity}")
     end
   end
 
   def validate_battery_charge
-    if @battery_charge.to_f >= MIN_BATTERY_CHARGE && @battery_charge.to_f <= MAX_BATTERY_CHARGE
+    if @reading_value.battery_charge.to_f >= MIN_BATTERY_CHARGE && @reading_value.battery_charge.to_f <= MAX_BATTERY_CHARGE
       Success(true)
     else
-      Failure("Battery charge must be between #{MIN_BATTERY_CHARGE} and #{MAX_BATTERY_CHARGE}, corrupt battery charge: #{@battery_charge}")
+      Failure("Battery charge must be between #{MIN_BATTERY_CHARGE} and #{MAX_BATTERY_CHARGE}, corrupt battery charge: #{@reading_value.battery_charge}")
     end
   end
 
   def write_to_db
     Reading.create(
-      id: @id,
-      number: @number,
-      thermostat_id: @thermostat_id,
-      temperature: @temperature,
-      humidity: @humidity,
-      battery_charge: @battery_charge
+      id: @reading_value.id,
+      number: @reading_value.number,
+      thermostat_id: Thermostat.find_by(household_token: @reading_value.household_token).id,
+      temperature: @reading_value.temperature,
+      humidity: @reading_value.humidity,
+      battery_charge: @reading_value.battery_charge
     )
 
     Success(true)
