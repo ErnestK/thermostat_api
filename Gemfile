@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
+gem 'dry-initializer'
+gem 'dry-monads'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 gem 'pg'
 gem 'puma', '~> 4.1'
@@ -22,4 +24,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'rake'
+  gem 'rspec'
+  gem 'rspec-rails'
 end
