@@ -5,7 +5,7 @@ class ReadingsController < ApplicationController
     params.require(:household_token)
     params.permit(:temperature, :humidity, :battery, :household_token)
 
-    id, number = CalcNumberAndIDService.new(params.permit(:household_token)).call
+    id, number = IdsDictionary::CalcNumberAndIDService.new(params.permit(:household_token)[:household_token]).call
 
     reading_value = ReadingValue.new(
       params.permit(:temperature, :humidity, :battery, :household_token)
@@ -13,7 +13,7 @@ class ReadingsController < ApplicationController
             .merge(number: number)
     )
 
-    Cache::PushReadingService.new(reading_value).call
+    CacheReadings::PushService.new(reading_value).call
     ProcessReadingWorker.perform_async(id)
 
     render_monads serializer: CreateReadingSerializer, data: reading_value

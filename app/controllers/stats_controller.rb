@@ -2,6 +2,6 @@
 
 class StatsController < ApplicationController
   def index
-    render_monads serializer: StatsSerializer, data: StatDictionary::GetAllService.new.call
+    render_monads serializer: StatsSerializer, data: GetAllStatService.new.call
   end
 end
