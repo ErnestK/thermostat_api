@@ -18,6 +18,6 @@ class FindReadingService
   end
 
   def find_in_db
-    Reading.find(reading_id)
+    Reading.find_by(id: reading_id)
   end
 end
