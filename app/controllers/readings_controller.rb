@@ -5,7 +5,7 @@ class ReadingsController < ApplicationController
     params.require(:household_token)
     params.permit(:temperature, :humidity, :battery, :household_token)
 
-    id, number = IdsDictionary::CalcNumberAndIDService.new(params.permit(:household_token)[:household_token]).call
+    id, number = IdsDictionary::CalcNumberAndIDService.new(params.permit(:household_token)[:household_token]).call.value!
 
     reading_value = ReadingValue.new(
       params.permit(:temperature, :humidity, :battery, :household_token)
