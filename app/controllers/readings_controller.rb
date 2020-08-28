@@ -13,7 +13,7 @@ class ReadingsController < ApplicationController
             .merge(number: number)
     )
 
-    PushToReadingCacheService.new(reading_value).call
+    Cache::PushReadingService.new(reading_value).call
     ProcessReadingWorker.perform_async(id)
 
     render json: ::CreateReadingSerializer.new(reading_value).serialized_json
