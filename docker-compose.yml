@@ -23,6 +23,8 @@ services:
 
     app:
       build: .
+      tty: true
+      stdin_open: true
       volumes:
         - .:/app
       ports:
