@@ -11,7 +11,7 @@ services:
         - '5432:5432'
 
     redis:
-        image: redis:3.2.8
+        image: redis:5.0.9
         environment:
           # ALLOW_EMPTY_PASSWORD is recommended only for development.
           - ALLOW_EMPTY_PASSWORD=yes
@@ -31,6 +31,15 @@ services:
       depends_on:
         - pg
         - redis
+
+    sidekiq:
+      build: .
+      volumes:
+        - .:/app
+      links:
+        - pg
+        - redis
+      command: bundle exec sidekiq
 
 volumes:
   redis_data:
