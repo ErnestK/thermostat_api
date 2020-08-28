@@ -12,8 +12,8 @@ RSpec.describe IdsDictionary::CalcNumberAndIdService, '#call' do
     Redis.current.flushall
   end
 
-  context 'when dict not exist' do
-    it 'create dict and return 1 as id and 1 as number in Success' do
+  context 'when dict does not exist' do
+    it 'creates dict and returns id = 1 and number = 1 in Success' do
       result = IdsDictionary::CalcNumberAndIdService.new(token).call
 
       expect(result).to eq Success([1, 1])
@@ -21,7 +21,7 @@ RSpec.describe IdsDictionary::CalcNumberAndIdService, '#call' do
   end
 
   context 'when call second times with different token' do
-    it 'create dict and return 2 as id and 1 as number in Success' do
+    it 'creates dict and returns id = 2  and number = 1 in Success' do
       result = IdsDictionary::CalcNumberAndIdService.new(token).call
       result = IdsDictionary::CalcNumberAndIdService.new(diff_token).call
 

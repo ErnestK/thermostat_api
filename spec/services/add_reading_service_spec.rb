@@ -17,8 +17,8 @@ RSpec.describe AddReadingService, '#call' do
     )
   end
 
-  context 'when all data is correct' do
-    it 'Add new data in table' do
+  context 'when reading is valid' do
+    it 'creates new reading' do
       create(:thermostat)
       CacheReadings::PushService.new(valid_reading_value).call
 

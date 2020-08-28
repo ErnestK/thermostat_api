@@ -16,8 +16,8 @@ RSpec.describe ValidateReadingService, '#call' do
     )
   end
 
-  context 'when all data is correct' do
-    it 'return true in Success' do
+  context 'when reading_value is valid' do
+    it 'returns true in Success' do
       create(:thermostat)
 
       result = ValidateReadingService.new(valid_reading_value).call
@@ -26,16 +26,16 @@ RSpec.describe ValidateReadingService, '#call' do
     end
   end
 
-  context 'when thermostat with id not exist' do
-    it 'return failure with message' do
+  context 'when thermostat does not exists' do
+    it 'returns failure with message' do
       result = ValidateReadingService.new(valid_reading_value).call
 
       expect(result).to eq Failure("Thermostat with that token no found, missing household_token: 1")
     end
   end
 
-  context 'when temperature invalid' do
-    it 'return failure with message' do
+  context 'when temperature is invalid' do
+    it 'returns failure with message' do
       create(:thermostat)
       valid_reading_value.temperature = 29_299
 
@@ -45,8 +45,8 @@ RSpec.describe ValidateReadingService, '#call' do
     end
   end
 
-  context 'when humidity invalid' do
-    it 'return failure with message' do
+  context 'when humudity is invalid' do
+    it 'returns failure with message' do
       create(:thermostat)
       valid_reading_value.humidity = 991
 
@@ -56,8 +56,8 @@ RSpec.describe ValidateReadingService, '#call' do
     end
   end
 
-  context 'when battery_charge invalid' do
-    it 'return failure with message' do
+  context 'when battery_charge is invalid' do
+    it 'returns failure with message' do
       create(:thermostat)
       valid_reading_value.battery_charge = -29_299
 

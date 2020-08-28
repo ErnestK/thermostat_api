@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe StatDictionary::AddService, '#call' do
   include Dry::Monads[:result]
   include WithRedisNaming
-  STAT_DICTIONARY_VALUE_KEYS = 11
+  STAT_DICTIONARY_VALUE_ATTR_COUNT = 11
 
   let(:reading_value) {
     ReadingValue.new(
@@ -22,12 +22,11 @@ RSpec.describe StatDictionary::AddService, '#call' do
     Redis.current.flushall
   end
 
-  context 'when call method' do
-    it 'add to db STAT_DICTIONARY_VALUE_KEYS keys and return true in Success' do
-      result = StatDictionary::AddService.new(reading_value).call
 
-      expect(result).to eq Success(true)
-      expect(Redis.current.hlen(dict_collection_name)).to eq STAT_DICTIONARY_VALUE_KEYS
-    end
+  it 'adds to db all reading_value params and returns Success' do
+    result = StatDictionary::AddService.new(reading_value).call
+
+    expect(result).to eq Success(true)
+    expect(Redis.current.hlen(dict_collection_name)).to eq STAT_DICTIONARY_VALUE_ATTR_COUNT
   end
 end
