@@ -14,7 +14,7 @@ class ReadingsController < ApplicationController
     )
 
     PushToReadingCacheService.new(reading_value).call
-    ProcessReadingJob.enque(id)
+    ProcessReadingWorker.perform_async(id)
 
     render json: ::CreateReadingSerializer.new(reading_value).serialized_json
   end
