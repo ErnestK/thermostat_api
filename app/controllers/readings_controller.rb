@@ -16,12 +16,12 @@ class ReadingsController < ApplicationController
     Cache::PushReadingService.new(reading_value).call
     ProcessReadingWorker.perform_async(id)
 
-    render json: ::CreateReadingSerializer.new(reading_value).serialized_json
+    render_monads serializer: CreateReadingSerializer, data: reading_value
   end
 
   def show
     params.require(:id)
 
-    render json: ::ReadingSerializer.new(FindReadingService.new(params.permit(:id)).call).serialized_json
+    render_monads serializer: ReadingSerializer, data: FindReadingService.new(params.permit(:id)[:id]).call
   end
 end
