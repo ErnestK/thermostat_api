@@ -9,7 +9,7 @@ class ReadingsController < ApplicationController
       temperature: params[:temperature],
       humidity: params[:humidity],
       battery_charge: params[:battery_charge],
-      household_token: params[:household_token],
+      household_token: params[:household_token]
     }
     reading_value = DefferedCreateReadingService.new(hash_params).call
 

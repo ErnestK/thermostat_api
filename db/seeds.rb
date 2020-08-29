@@ -12,4 +12,9 @@ thermostat = Thermostat.create(household_token: '1', location: 'baker street 1, 
 Thermostat.create(household_token: '2', location: 'baker street 1, apt 2')
 Thermostat.create(household_token: '3', location: 'baker street 1, apt 3')
 
-DefferedCreateReadingService.new(temperature: 1, humidity: 1, battery_charge: 1, household_token: thermostat.household_token).call
+DefferedCreateReadingService.new(
+  temperature: 1,
+  humidity: 1,
+  battery_charge: 1,
+  household_token: thermostat.household_token
+).call

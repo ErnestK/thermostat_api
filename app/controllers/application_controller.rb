@@ -7,7 +7,8 @@ class ApplicationController < ActionController::API
     if data.success?
       render json: serializer.new(data.success).serialized_json
     else
-      render json: ::FailureSerializer.new(FailureValue.new(message: data.failure)).serialized_json
+      render json: ::FailureSerializer.new(FailureValue.new(message: data.failure)).serialized_json,
+             status: :bad_request
     end
   end
 end

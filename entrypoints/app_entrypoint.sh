@@ -4,7 +4,7 @@ gem install bundler -v 2.1.4
 bin/bundle install
 
 rm -f tmp/pids/server.pid
-bin/bundle exec rake db:create
+bin/rails db:setup
 echo Start migrations
 bin/bundle exec rails db:migrate RAILS_ENV=development
 echo Migrations done!
