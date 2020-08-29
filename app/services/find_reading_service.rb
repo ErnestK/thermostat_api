@@ -7,17 +7,10 @@ class FindReadingService
   param :reading_id
 
   def call
-    reading = find_in_cache || find_in_db
-    reading.nil? ? Failure("Cant find reading with id: #{reading_id}") : Success(reading)
-  end
+    CacheReadings::GetService.new(reading_id).call.bind do |data_from_cache|
+      reading = data_from_cache || Reading.find_by(id: reading_id)
 
-  private
-
-  def find_in_cache
-    Cache::GetReadingService.new(reading_id).call
-  end
-
-  def find_in_db
-    Reading.find_by(id: reading_id)
+      reading.nil? ? Failure("Cant find reading with id: #{reading_id}") : Success(reading)
+    end
   end
 end
