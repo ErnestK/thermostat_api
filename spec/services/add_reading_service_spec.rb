@@ -18,6 +18,10 @@ RSpec.describe AddReadingService, '#call' do
     )
   end
 
+  before(:each) do
+    Redis.current.flushall
+  end
+
   context 'when reading is valid' do
     it 'creates new reading' do
       create(:thermostat)

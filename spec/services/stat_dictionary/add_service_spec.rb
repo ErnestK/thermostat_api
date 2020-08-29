@@ -23,7 +23,6 @@ RSpec.describe StatDictionary::AddService, '#call' do
     Redis.current.flushall
   end
 
-
   it 'adds to db all reading_value params and returns Success' do
     result = subject.new(reading_value).call
 
