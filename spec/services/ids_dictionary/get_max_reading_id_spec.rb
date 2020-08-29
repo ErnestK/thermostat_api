@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe IdsDictionary::GetMaxReadingId, '#call' do
   include Dry::Monads[:result]
 
+  let(:subject) { described_class }
   let(:token) { 'test_token' }
 
   before(:each) do
@@ -13,7 +14,7 @@ RSpec.describe IdsDictionary::GetMaxReadingId, '#call' do
 
   context 'when collection is not created yet' do
     it 'returns 0 as max id' do
-      result = IdsDictionary::GetMaxReadingId.new.call
+      result = subject.new.call
 
       expect(result).to eq Success(0)
     end
@@ -23,7 +24,7 @@ RSpec.describe IdsDictionary::GetMaxReadingId, '#call' do
     it 'returns 1 as max id' do
       IdsDictionary::CalcNumberAndIdService.new(token).call
 
-      result = IdsDictionary::GetMaxReadingId.new.call
+      result = subject.new.call
 
       expect(result).to eq Success(1)
     end

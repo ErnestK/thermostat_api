@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe StatDictionary::GetAllService, '#call' do
   include Dry::Monads[:result]
 
+  let(:subject) { described_class }
+
   before(:each) do
     Redis.current.flushall
   end
@@ -39,7 +41,7 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
 
     it 'returns expected stats data as StatDictionaryValue' do
       StatDictionary::AddService.new(reading_value).call
-      result = StatDictionary::GetAllService.new.call
+      result = subject.new.call
 
       expect(result).to eq Success(expected_stat_dictionary_value)
     end
@@ -63,7 +65,7 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
     }
 
     it 'returns zero object in Success as StatDictionaryValue' do
-      result = StatDictionary::GetAllService.new.call
+      result = subject.new.call
 
       expect(result).to eq Success(expected_empty_stat_dictionary_value)
     end

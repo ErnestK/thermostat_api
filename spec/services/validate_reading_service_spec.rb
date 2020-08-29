@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe ValidateReadingService, '#call' do
   include Dry::Monads[:result]
 
+  let(:subject) { described_class }
+
   let(:valid_reading_value) do
     ReadingValue.new(
       id: 1,
@@ -20,7 +22,7 @@ RSpec.describe ValidateReadingService, '#call' do
     it 'returns true in Success' do
       create(:thermostat)
 
-      result = ValidateReadingService.new(valid_reading_value).call
+      result = subject.new(valid_reading_value).call
 
       expect(result).to eq Success(true)
     end
@@ -28,7 +30,7 @@ RSpec.describe ValidateReadingService, '#call' do
 
   context 'when thermostat does not exists' do
     it 'returns failure with message' do
-      result = ValidateReadingService.new(valid_reading_value).call
+      result = subject.new(valid_reading_value).call
 
       expect(result).to eq Failure("Thermostat with that token no found, missing household_token: 1")
     end
@@ -39,7 +41,7 @@ RSpec.describe ValidateReadingService, '#call' do
       create(:thermostat)
       valid_reading_value.temperature = 29_299
 
-      result = ValidateReadingService.new(valid_reading_value).call
+      result = subject.new(valid_reading_value).call
 
       expect(result).to eq Failure("Temperature must be between -200 and 200, corrupt temperature: 29299")
     end
@@ -50,7 +52,7 @@ RSpec.describe ValidateReadingService, '#call' do
       create(:thermostat)
       valid_reading_value.humidity = 991
 
-      result = ValidateReadingService.new(valid_reading_value).call
+      result = subject.new(valid_reading_value).call
 
       expect(result).to eq Failure("Humidity charge must be between -100 and 100, corrupt humidity: 991")
     end
@@ -61,7 +63,7 @@ RSpec.describe ValidateReadingService, '#call' do
       create(:thermostat)
       valid_reading_value.battery_charge = -29_299
 
-      result = ValidateReadingService.new(valid_reading_value).call
+      result = subject.new(valid_reading_value).call
 
       expect(result).to eq Failure("Battery charge must be between 0 and 100, corrupt battery charge: -29299")
     end

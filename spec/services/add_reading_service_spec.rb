@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe AddReadingService, '#call' do
   include Dry::Monads[:result]
 
+  let(:subject) { described_class }
   let(:reading_id) { 1 }
   let(:valid_reading_value) do
     ReadingValue.new(
@@ -22,7 +23,7 @@ RSpec.describe AddReadingService, '#call' do
       create(:thermostat)
       CacheReadings::PushService.new(valid_reading_value).call
 
-      result = AddReadingService.new(reading_id).call
+      result = subject.new(reading_id).call
 
       expect(result).to eq Success(true)
       expect(Reading.count).to eq 1

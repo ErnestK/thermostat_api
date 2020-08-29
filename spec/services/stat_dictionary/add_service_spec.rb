@@ -7,6 +7,7 @@ RSpec.describe StatDictionary::AddService, '#call' do
   include WithRedisNaming
   STAT_DICTIONARY_VALUE_ATTR_COUNT = 11
 
+  let(:subject) { described_class }
   let(:reading_value) {
     ReadingValue.new(
       id: 1,
@@ -24,7 +25,7 @@ RSpec.describe StatDictionary::AddService, '#call' do
 
 
   it 'adds to db all reading_value params and returns Success' do
-    result = StatDictionary::AddService.new(reading_value).call
+    result = subject.new(reading_value).call
 
     expect(result).to eq Success(true)
     expect(Redis.current.hlen(dict_collection_name)).to eq STAT_DICTIONARY_VALUE_ATTR_COUNT
