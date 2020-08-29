@@ -11,8 +11,6 @@ module CacheReadings
 
     def call
       str = Redis.current.hget(cache_readings_collection_name, reading_id)
-      return Success(nil) unless str
-
       Success(deserilialize_reading_value_from(str))
     end
   end

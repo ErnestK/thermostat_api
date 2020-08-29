@@ -3,6 +3,7 @@
 module CacheReadings
   module WithRedisDataDeserialize
     def deserilialize_reading_value_from(str)
+      return unless str
       hash = JSON.parse(str.gsub(':', '').gsub('=>', ':').gsub(':nil', ':null')).symbolize_keys
 
       ReadingValue.new(

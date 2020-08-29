@@ -13,7 +13,7 @@ module CacheReadings
     def call
       cached_readings = (last_id.to_i + 1..max_id.to_i).map do |reading_id|
         deserilialize_reading_value_from Redis.current.hget(cache_readings_collection_name, reading_id)
-      end
+      end.compact
 
       Success(cached_readings)
     end

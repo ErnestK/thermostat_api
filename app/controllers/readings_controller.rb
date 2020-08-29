@@ -3,10 +3,15 @@
 class ReadingsController < ApplicationController
   def create
     params.require(:household_token)
-    params.permit(:temperature, :humidity, :battery, :household_token)
+    params.permit(:temperature, :humidity, :battery_charge, :household_token)
 
-    reading_value = DefferedCreateReadingService.new(params.permit(:temperature, :humidity, :battery, :household_token))
-                                                .call
+    hash_params = {
+      temperature: params[:temperature],
+      humidity: params[:humidity],
+      battery_charge: params[:battery_charge],
+      household_token: params[:household_token],
+    }
+    reading_value = DefferedCreateReadingService.new(hash_params).call
 
     render_monads serializer: CreateReadingSerializer, data: reading_value
   end
