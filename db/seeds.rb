@@ -12,15 +12,4 @@ thermostat = Thermostat.create(household_token: '1', location: 'baker street 1, 
 Thermostat.create(household_token: '2', location: 'baker street 1, apt 2')
 Thermostat.create(household_token: '3', location: 'baker street 1, apt 3')
 
-id, number = IdsDictionary::CalcNumberAndIdService.new('seed_token').call.value!
-reading_value = ReadingValue.new(
-  id: id,
-  number: number,
-  household_token: thermostat.household_token,
-  temperature: '6',
-  humidity: '78',
-  battery_charge: '12'
-)
-
-CacheReadings::PushService.new(reading_value).call
-CreateReadingService.new(id).call
+DefferedCreateReadingService.new(1, 1, 1, thermostat.household_token).call
