@@ -29,7 +29,7 @@ services:
         - .:/app
       ports:
         - "3000:3000"
-      entrypoint: /app/entrypoint.sh
+      entrypoint: /app/entrypoints/app_entrypoint.sh
       depends_on:
         - pg
         - redis
@@ -41,7 +41,7 @@ services:
       links:
         - pg
         - redis
-      command: bundle exec sidekiq
+      command: /app/entrypoints/sidekiq_entrypoint.sh
 
 volumes:
   redis_data:
