@@ -14,7 +14,7 @@ RSpec.describe ValidateReadingService, '#call' do
       household_token: '1',
       temperature: 1,
       humidity: 1,
-      battery_charge: 1,
+      battery_charge: 1
     )
   end
 
@@ -32,7 +32,7 @@ RSpec.describe ValidateReadingService, '#call' do
     it 'returns failure with message' do
       result = subject.new(valid_reading_value).call
 
-      expect(result).to eq Failure("Thermostat with that token no found, missing household_token: 1")
+      expect(result).to eq Failure('Thermostat with that token no found, missing household_token: 1')
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe ValidateReadingService, '#call' do
 
       result = subject.new(valid_reading_value).call
 
-      expect(result).to eq Failure("Temperature must be between -200 and 200, corrupt temperature: 29299")
+      expect(result).to eq Failure('Temperature must be between -200 and 200, corrupt temperature: 29299')
     end
   end
 
@@ -54,7 +54,7 @@ RSpec.describe ValidateReadingService, '#call' do
 
       result = subject.new(valid_reading_value).call
 
-      expect(result).to eq Failure("Humidity charge must be between -100 and 100, corrupt humidity: 991")
+      expect(result).to eq Failure('Humidity charge must be between -100 and 100, corrupt humidity: 991')
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe ValidateReadingService, '#call' do
 
       result = subject.new(valid_reading_value).call
 
-      expect(result).to eq Failure("Battery charge must be between 0 and 100, corrupt battery charge: -29299")
+      expect(result).to eq Failure('Battery charge must be between 0 and 100, corrupt battery charge: -29299')
     end
   end
 end

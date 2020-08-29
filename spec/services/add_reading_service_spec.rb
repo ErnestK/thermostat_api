@@ -14,7 +14,7 @@ RSpec.describe AddReadingService, '#call' do
       household_token: '1',
       temperature: 1,
       humidity: 1,
-      battery_charge: 1,
+      battery_charge: 1
     )
   end
 

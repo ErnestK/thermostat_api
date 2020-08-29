@@ -25,8 +25,8 @@ module StatDictionary
           last_id: @stat_dictionary_value.last_id
         )
       )
-    rescue StandardError => ex
-      Failure("Exception, during agg data stats dictionary: #{ex.message}")
+    rescue StandardError => e
+      Failure("Exception, during agg data stats dictionary: #{e.message}")
     end
 
     private

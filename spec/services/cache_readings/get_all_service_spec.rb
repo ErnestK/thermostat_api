@@ -17,7 +17,7 @@ RSpec.describe CacheReadings::GetAllService, '#call' do
       household_token: '1',
       temperature: 1,
       humidity: 1,
-      battery_charge: 1,
+      battery_charge: 1
     )
   end
 
@@ -28,7 +28,7 @@ RSpec.describe CacheReadings::GetAllService, '#call' do
       household_token: '2',
       temperature: 2,
       humidity: 2,
-      battery_charge: 2,
+      battery_charge: 2
     )
   end
 
@@ -39,7 +39,7 @@ RSpec.describe CacheReadings::GetAllService, '#call' do
       household_token: '3',
       temperature: 3,
       humidity: 3,
-      battery_charge: 3,
+      battery_charge: 3
     )
   end
 

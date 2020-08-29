@@ -8,16 +8,16 @@ RSpec.describe StatDictionary::AddService, '#call' do
   STAT_DICTIONARY_VALUE_ATTR_COUNT = 11
 
   let(:subject) { described_class }
-  let(:reading_value) {
+  let(:reading_value) do
     ReadingValue.new(
       id: 1,
       number: 1,
       household_token: '1',
       temperature: 1,
       humidity: 1,
-      battery_charge: 1,
+      battery_charge: 1
     )
-  }
+  end
 
   before(:each) do
     Redis.current.flushall

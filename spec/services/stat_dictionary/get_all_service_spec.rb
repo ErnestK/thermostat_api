@@ -16,7 +16,7 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
   end
 
   context 'when stats data is not empty' do
-    let(:expected_stat_dictionary_value) {
+    let(:expected_stat_dictionary_value) do
       StatDictionaryValue.new(
         min_temperature: temperature,
         max_temperature: temperature,
@@ -30,18 +30,18 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
         count: 1.0,
         last_id: 1.0
       )
-    }
+    end
 
-    let(:reading_value) {
+    let(:reading_value) do
       ReadingValue.new(
         id: 1,
         number: 2,
         household_token: 1,
         temperature: temperature,
         humidity: humudity,
-        battery_charge: battery_charge,
+        battery_charge: battery_charge
       )
-    }
+    end
 
     it 'returns expected stats data as StatDictionaryValue' do
       StatDictionary::AddService.new(reading_value).call
@@ -52,7 +52,7 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
   end
 
   context 'when stats data is empty' do
-    let(:expected_empty_stat_dictionary_value) {
+    let(:expected_empty_stat_dictionary_value) do
       StatDictionaryValue.new(
         min_temperature: nil,
         max_temperature: nil,
@@ -66,7 +66,7 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
         count: 0.0,
         last_id: 0.0
       )
-    }
+    end
 
     it 'returns nil object in Success as StatDictionaryValue' do
       result = subject.new.call

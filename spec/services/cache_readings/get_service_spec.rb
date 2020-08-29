@@ -8,16 +8,16 @@ RSpec.describe CacheReadings::GetService, '#call' do
 
   let(:subject) { described_class }
   let(:reading_id) { 1 }
-  let(:reading_value) {
+  let(:reading_value) do
     ReadingValue.new(
       id: reading_id,
       number: 1,
       household_token: '1',
       temperature: 1,
       humidity: 1,
-      battery_charge: 1,
+      battery_charge: 1
     )
-  }
+  end
 
   before(:each) do
     Redis.current.flushall

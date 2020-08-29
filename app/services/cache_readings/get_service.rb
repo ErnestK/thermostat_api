@@ -12,7 +12,7 @@ module CacheReadings
       str = Redis.current.hget(cache_readings_collection_name, reading_id)
       return Success(nil) unless str
 
-      hash = JSON.parse(str.gsub(':', '').gsub('=>', ':').gsub(":nil", ":null")).symbolize_keys
+      hash = JSON.parse(str.gsub(':', '').gsub('=>', ':').gsub(':nil', ':null')).symbolize_keys
 
       Success(
         ReadingValue.new(

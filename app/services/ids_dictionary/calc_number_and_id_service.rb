@@ -27,9 +27,8 @@ module IdsDictionary
     def increment_id_and_number(number, last_id)
       Success(
         Redis.current.hmset(ids_readings_collection_name,
-          household_token.to_sym, number.to_i + 1,
-          :last_id, last_id.to_i + 1
-        )
+                            household_token.to_sym, number.to_i + 1,
+                            :last_id, last_id.to_i + 1)
       )
     end
   end

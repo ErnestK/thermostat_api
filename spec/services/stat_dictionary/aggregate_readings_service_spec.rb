@@ -13,7 +13,7 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
   let(:avg_battery_charge) { 6.0 }
   let(:subject) { described_class }
 
-  let(:stat_dictionary_value) {
+  let(:stat_dictionary_value) do
     StatDictionaryValue.new(
       min_temperature: 6.0,
       max_temperature: 8.0,
@@ -27,18 +27,18 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
       count: count,
       last_id: 1.0
     )
-  }
+  end
 
-  let(:reading_value) {
+  let(:reading_value) do
     ReadingValue.new(
       id: 2,
       number: 1,
       household_token: '1',
       temperature: 1,
       humidity: 1,
-      battery_charge: 1,
+      battery_charge: 1
     )
-  }
+  end
 
   before(:each) do
     Redis.current.flushall
@@ -79,16 +79,16 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
 
   context 'when pass reading value with temperature lt then min' do
     let(:lesser_temperature) { 1.0 }
-    let(:reading_value) {
+    let(:reading_value) do
       ReadingValue.new(
         id: 2,
         number: 1,
         household_token: '1',
         temperature: lesser_temperature,
         humidity: 1,
-        battery_charge: 1,
+        battery_charge: 1
       )
-    }
+    end
 
     it 'changes min_temperature' do
       result = subject.new(reading_value, stat_dictionary_value).call
@@ -99,16 +99,16 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
 
   context 'when pass reading value with humudity lt then min' do
     let(:lesser_humidity) { 1.0 }
-    let(:reading_value) {
+    let(:reading_value) do
       ReadingValue.new(
         id: 2,
         number: 1,
         household_token: '1',
         temperature: 1,
         humidity: lesser_humidity,
-        battery_charge: 1,
+        battery_charge: 1
       )
-    }
+    end
 
     it 'changes min_humudity' do
       result = subject.new(reading_value, stat_dictionary_value).call
@@ -119,7 +119,7 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
 
   context 'when pass reading value with battery_charge lt then min' do
     let(:lesser_battery_charge) { 1.0 }
-    let(:reading_value) {
+    let(:reading_value) do
       ReadingValue.new(
         id: 2,
         number: 1,
@@ -128,7 +128,7 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
         humidity: 1,
         battery_charge: lesser_battery_charge
       )
-    }
+    end
 
     it 'changes min_battery_charge' do
       result = subject.new(reading_value, stat_dictionary_value).call
@@ -142,32 +142,32 @@ RSpec.describe StatDictionary::AggregateReadingsService, '#call' do
     let(:temperature) { 3.0 }
     let(:humidity) { 7.0 }
     let(:battery_charge) { 13.0 }
-    let(:reading_value) {
+    let(:reading_value) do
       ReadingValue.new(
         id: 2,
         number: 1,
         household_token: '1',
         temperature: temperature,
         humidity: humidity,
-        battery_charge: battery_charge,
+        battery_charge: battery_charge
       )
-    }
+    end
     let(:result) { subject.new(reading_value, stat_dictionary_value).call }
 
     it 'recalculates avg_temperature' do
-      expect_value = (temperature + avg_temperature * count) / ( count + 1 )
+      expect_value = (temperature + avg_temperature * count) / (count + 1)
 
       expect(result.value!.avg_temperature).to eq expect_value
     end
 
     it 'recalculates avg_humudity' do
-      expect_value = (humidity + avg_humidity * count) / ( count + 1 )
+      expect_value = (humidity + avg_humidity * count) / (count + 1)
 
       expect(result.value!.avg_humidity).to eq expect_value
     end
 
     it 'recalculates avg_battery_charge' do
-      expect_value = (battery_charge + avg_battery_charge * count) / ( count + 1 )
+      expect_value = (battery_charge + avg_battery_charge * count) / (count + 1)
 
       expect(result.value!.avg_battery_charge).to eq expect_value
     end

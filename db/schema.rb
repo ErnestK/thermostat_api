@@ -10,28 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_140801) do
-
+ActiveRecord::Schema.define(version: 20_200_827_140_801) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "readings", force: :cascade do |t|
-    t.integer "number"
-    t.decimal "temperature"
-    t.decimal "humidity"
-    t.decimal "battery_charge"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "thermostat_id"
-    t.index ["thermostat_id"], name: "index_readings_on_thermostat_id"
+  create_table 'readings', force: :cascade do |t|
+    t.integer 'number'
+    t.decimal 'temperature'
+    t.decimal 'humidity'
+    t.decimal 'battery_charge'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.bigint 'thermostat_id'
+    t.index ['thermostat_id'], name: 'index_readings_on_thermostat_id'
   end
 
-  create_table "thermostats", force: :cascade do |t|
-    t.string "household_token"
-    t.text "location"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'thermostats', force: :cascade do |t|
+    t.string 'household_token'
+    t.text 'location'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  add_foreign_key "readings", "thermostats"
+  add_foreign_key 'readings', 'thermostats'
 end

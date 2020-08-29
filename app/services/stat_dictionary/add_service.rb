@@ -14,8 +14,8 @@ module StatDictionary
           write_to_dict(agg_stat_dictionary_value)
         end
       end
-    rescue StandardError => ex
-      Failure("Exception, during added data to stats dictionary: #{ex.message}")
+    rescue StandardError => e
+      Failure("Exception, during added data to stats dictionary: #{e.message}")
     end
 
     private

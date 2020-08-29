@@ -27,8 +27,8 @@ module StatDictionary
           last_id: last_id
         )
       )
-    rescue StandardError => ex
-      Failure("Exception, during added data to stats dictionary: #{ex.message}")
+    rescue StandardError => e
+      Failure("Exception, during added data to stats dictionary: #{e.message}")
     end
   end
 end

@@ -29,7 +29,7 @@ class AddReadingService
     )
 
     Success(true)
-  rescue StandardError => ex
-    Failure("Exception, during write data to DB: #{ex.message}")
+  rescue StandardError => e
+    Failure("Exception, during write data to DB: #{e.message}")
   end
 end
