@@ -4,6 +4,6 @@ class ProcessReadingWorker
   include Sidekiq::Worker
 
   def perform(id)
-    AddReadingService.new(id).call
+    CreateReadingService.new(id).call
   end
 end

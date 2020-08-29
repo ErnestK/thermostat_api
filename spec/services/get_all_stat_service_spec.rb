@@ -23,7 +23,7 @@ RSpec.describe GetAllStatService, '#call' do
   let(:expected_stat_dictionary_value) do
     StatDictionaryValue.new(
       id: nil,
-      count: 2.0,
+      count: 2,
       last_id: 1,
       avg_temperature: (lower_temperature + higher_temperature) / 2,
       min_temperature: lower_temperature,
@@ -59,7 +59,7 @@ RSpec.describe GetAllStatService, '#call' do
       )
 
       CacheReadings::PushService.new(reading_value_db).call
-      AddReadingService.new(id).call
+      CreateReadingService.new(id).call
     end
 
     def create_row_in_cache

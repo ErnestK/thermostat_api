@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'bin/*'
+    - 'db/schema.rb'
   NewCops: disable
 
 Documentation:
@@ -10,3 +11,18 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - spec/**/*
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/CyclomaticComplexity:
+  Max: 12
+
+Metrics/PerceivedComplexity:
+  Max: 12
+
+Metrics/AbcSize:
+  Exclude:
+    # insert in redis collection
+    - app/services/stat_dictionary/get_all_service.rb
+    - app/services/stat_dictionary/aggregate_readings_service.rb

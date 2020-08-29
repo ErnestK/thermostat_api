@@ -23,4 +23,4 @@ reading_value = ReadingValue.new(
 )
 
 CacheReadings::PushService.new(reading_value).call
-AddReadingService.new(id).call
+CreateReadingService.new(id).call

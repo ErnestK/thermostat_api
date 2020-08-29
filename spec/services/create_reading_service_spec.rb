@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AddReadingService, '#call' do
+RSpec.describe CreateReadingService, '#call' do
   include Dry::Monads[:result]
 
   let(:subject) { described_class }

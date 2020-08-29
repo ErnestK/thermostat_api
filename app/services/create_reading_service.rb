@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddReadingService
+class CreateReadingService
   extend  Dry::Initializer
   include Dry::Monads[:result]
 
