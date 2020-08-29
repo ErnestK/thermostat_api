@@ -14,6 +14,9 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Max: 20
+  Exclude:
+    # insert in redis collection
+    - app/services/stat_dictionary/add_service.rb
 
 Metrics/CyclomaticComplexity:
   Max: 12

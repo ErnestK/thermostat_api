@@ -9,7 +9,11 @@ module CacheReadings
     param :reading_value
 
     def call
-      Success(Redis.current.hset(cache_readings_collection_name, reading_value.id, reading_value.to_h.transform_keys(&:to_s)))
+      Success(
+        Redis.current.hset(
+          cache_readings_collection_name, reading_value.id, reading_value.to_h.transform_keys(&:to_s)
+        )
+      )
     end
   end
 end

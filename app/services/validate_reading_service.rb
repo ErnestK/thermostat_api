@@ -41,7 +41,8 @@ class ValidateReadingService
     if @reading_value.temperature.to_f >= MIN_TEMPERATURE && @reading_value.temperature.to_f <= MAX_TEMPERATURE
       Success(true)
     else
-      Failure("Temperature must be between #{MIN_TEMPERATURE} and #{MAX_TEMPERATURE}, corrupt temperature: #{@reading_value.temperature}")
+      Failure("Temperature must be between #{MIN_TEMPERATURE} and #{MAX_TEMPERATURE}, \
+corrupt temperature: #{@reading_value.temperature}")
     end
   end
 
@@ -49,15 +50,20 @@ class ValidateReadingService
     if @reading_value.humidity.to_f >= MIN_HUMIDITY && @reading_value.humidity.to_f <= MAX_HUMIDITY
       Success(true)
     else
-      Failure("Humidity charge must be between #{MIN_HUMIDITY} and #{MAX_HUMIDITY}, corrupt humidity: #{@reading_value.humidity}")
+      Failure("Humidity charge must be between #{MIN_HUMIDITY} and #{MAX_HUMIDITY}, \
+corrupt humidity: #{@reading_value.humidity}")
     end
   end
 
   def validate_battery_charge
-    if @reading_value.battery_charge.to_f >= MIN_BATTERY_CHARGE && @reading_value.battery_charge.to_f <= MAX_BATTERY_CHARGE
+    is_temperature_not_gt_then_maximum = @reading_value.battery_charge.to_f <= MAX_BATTERY_CHARGE
+    is_temperature_not_lt_then_minimum = @reading_value.battery_charge.to_f >= MIN_BATTERY_CHARGE
+
+    if is_temperature_not_lt_then_minimum && is_temperature_not_gt_then_maximum
       Success(true)
     else
-      Failure("Battery charge must be between #{MIN_BATTERY_CHARGE} and #{MAX_BATTERY_CHARGE}, corrupt battery charge: #{@reading_value.battery_charge}")
+      Failure("Battery charge must be between #{MIN_BATTERY_CHARGE} and #{MAX_BATTERY_CHARGE}, \
+corrupt battery charge: #{@reading_value.battery_charge}")
     end
   end
 end

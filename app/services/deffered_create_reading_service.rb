@@ -4,10 +4,10 @@ class DefferedCreateReadingService
   extend  Dry::Initializer
   include Dry::Monads[:result]
 
-  opstion :temperature
-  opstion :humidity
-  opstion :battery
-  opstion :household_token
+  option :temperature
+  option :humidity
+  option :battery
+  option :household_token
 
   def call
     IdsDictionary::CalcNumberAndIdService.new(@household_token).call.bind do |id, number|

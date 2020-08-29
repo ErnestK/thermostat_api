@@ -5,6 +5,7 @@ module CacheReadings
     extend  Dry::Initializer
     include Dry::Monads[:result]
     include ::WithRedisNaming
+    include WithRedisDataDeserialize
 
     param :reading_id
 
@@ -12,20 +13,7 @@ module CacheReadings
       str = Redis.current.hget(cache_readings_collection_name, reading_id)
       return Success(nil) unless str
 
-      hash = JSON.parse(str.gsub(':', '').gsub('=>', ':').gsub(':nil', ':null')).symbolize_keys
-
-      Success(
-        ReadingValue.new(
-          id: hash[:id],
-          number: hash[:number],
-          temperature: hash[:temperature],
-          humidity: hash[:humidity],
-          battery_charge: hash[:battery_charge],
-          household_token: hash[:household_token],
-          updated_at: hash[:updated_at],
-          created_at: hash[:created_at]
-        )
-      )
+      Success(deserilialize_reading_value_from(str))
     end
   end
 end

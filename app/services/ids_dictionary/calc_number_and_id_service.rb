@@ -10,7 +10,7 @@ module IdsDictionary
 
     def call
       GetMaxReadingId.new.call.bind do |last_id|
-        get_number_for_household_token.bind do |number|
+        number_for_household_token.bind do |number|
           increment_id_and_number(number, last_id).bind do
             Success([last_id + 1, number + 1])
           end
@@ -20,7 +20,7 @@ module IdsDictionary
 
     private
 
-    def get_number_for_household_token
+    def number_for_household_token
       Success(Redis.current.hget(ids_readings_collection_name, household_token.to_sym).to_i)
     end
 
