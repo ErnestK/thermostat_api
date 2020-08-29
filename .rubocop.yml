@@ -3,6 +3,9 @@ AllCops:
     - 'bin/*'
   NewCops: disable
 
+Documentation:
+  Enabled: false
+
 Metrics/BlockLength:
   Enabled: true
   Exclude:
