@@ -7,6 +7,10 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
 
   let(:subject) { described_class }
 
+  let(:temperature) { 42.0 }
+  let(:humudity) { 43.0 }
+  let(:battery_charge) { 13.0 }
+
   before(:each) do
     Redis.current.flushall
   end
@@ -14,15 +18,15 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
   context 'when stats data is not empty' do
     let(:expected_stat_dictionary_value) {
       StatDictionaryValue.new(
-        min_temperature: 0.0,
-        max_temperature: 4.0,
-        avg_temperature: 4.0,
-        min_humidity: 0.0,
-        max_humidity: 8.0,
-        avg_humidity: 8.0,
-        min_battery_charge: 0.0,
-        max_battery_charge: 9.0,
-        avg_battery_charge: 9.0,
+        min_temperature: temperature,
+        max_temperature: temperature,
+        avg_temperature: temperature,
+        min_humidity: humudity,
+        max_humidity: humudity,
+        avg_humidity: humudity,
+        min_battery_charge: battery_charge,
+        max_battery_charge: battery_charge,
+        avg_battery_charge: battery_charge,
         count: 1.0,
         last_id: 1.0
       )
@@ -33,9 +37,9 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
         id: 1,
         number: 2,
         household_token: 1,
-        temperature: 4,
-        humidity: 8,
-        battery_charge: 9,
+        temperature: temperature,
+        humidity: humudity,
+        battery_charge: battery_charge,
       )
     }
 
@@ -50,21 +54,21 @@ RSpec.describe StatDictionary::GetAllService, '#call' do
   context 'when stats data is empty' do
     let(:expected_empty_stat_dictionary_value) {
       StatDictionaryValue.new(
-        min_temperature: 0.0,
-        max_temperature: 0.0,
-        avg_temperature: 0.0,
-        min_humidity: 0.0,
-        max_humidity: 0.0,
-        avg_humidity: 0.0,
-        min_battery_charge: 0.0,
-        max_battery_charge: 0.0,
-        avg_battery_charge: 0.0,
+        min_temperature: nil,
+        max_temperature: nil,
+        avg_temperature: nil,
+        min_humidity: nil,
+        max_humidity: nil,
+        avg_humidity: nil,
+        min_battery_charge: nil,
+        max_battery_charge: nil,
+        avg_battery_charge: nil,
         count: 0.0,
         last_id: 0.0
       )
     }
 
-    it 'returns zero object in Success as StatDictionaryValue' do
+    it 'returns nil object in Success as StatDictionaryValue' do
       result = subject.new.call
 
       expect(result).to eq Success(expected_empty_stat_dictionary_value)
