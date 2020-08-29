@@ -10,7 +10,7 @@ thermostat_1 = Thermostat.create(household_token: '1', location: 'baker street 1
 Thermostat.create(household_token: '2', location: 'baker street 1, apt 2')
 Thermostat.create(household_token: '3', location: 'baker street 1, apt 3')
 
-id, number = IdsDictionary::CalcNumberAndIDService.new(params.permit(:household_token)[:household_token]).call
+id, number = IdsDictionary::CalcNumberAndIdService.new('seed_token').call.value!
 reading_value = ReadingValue.new(
   id: id,
   number: number,
