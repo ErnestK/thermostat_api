@@ -62,7 +62,7 @@ After you have completed step "How to install section", you should
 - execute `docker-compose exec app bundle exec rubocop` in console - to run checking cops                     
                      
 ## Approach description                     
-1. The main condition was for the endpoint to work quickly, but at the same time return the id and number.                     
+1. POST Reading: The main condition was for the endpoint to work quickly, but at the same time return the id and number.                     
 The service which works in this action is **very fast**.                     
 - He get from Redis (hash collection) dictionary next id for this entry from all readings and the number for this particular token (since we using sequence for each token ).                     
 - Then create reading_value and put it in ither redis collection( right now without any validation, cause we should do it really fast,                      
@@ -80,7 +80,7 @@ Read/put from/to Redis hash collection operation cost O(1) complexity.
               
 if an error occurs, it writes to the log              
                                                        
-2. The main condition for the end point,                     
+2. GET Reading: The main condition for the end point,                     
 get data from both the main table and the cache, which Redis has not yet processed.                     
                      
 We have a cache (Redis), in which we looking for data and if we do not find the data there, then we look in the main table (PG)                              
@@ -88,7 +88,7 @@ We have a cache (Redis), in which we looking for data and if we do not find the 
 Read from Redis hash collection operation cost O(1) complexity.                     
 If we dont find data there we look for it in postgres whcih cost O(n) complexity. ( depending on count of readings(n) in table )                     
                                           
-3. Main end point condition,                     
+3. GET Stats: Main end point condition,                     
 get data from both the main table and the cache that Redis has not yet processed.                     
 Also do it fast.                     
                      
