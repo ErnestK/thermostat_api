@@ -80,16 +80,14 @@ Read/put from/to Redis hash collection operation cost O(1) complexity.
               
 if an error occurs, it writes to the log              
                                                        
-2. GET Reading: The main condition for the end point,                     
-get data from both the main table and the cache, which Redis has not yet processed.                     
+2. GET Reading: The main condition for the end point get data from both the main table and the cache, which Redis has not yet processed.                     
                      
 We have a cache (Redis), in which we looking for data and if we do not find the data there, then we look in the main table (PG)                              
 
 Read from Redis hash collection operation cost O(1) complexity.                     
 If we dont find data there we look for it in postgres whcih cost O(n) complexity. ( depending on count of readings(n) in table )                     
                                           
-3. GET Stats: Main end point condition,                     
-get data from both the main table and the cache that Redis has not yet processed.                     
+3. GET Stats: Main end point condition get data from both the main table and the cache that Redis has not yet processed.                     
 Also do it fast.                     
                      
 - Get data from dict( 1.2 point ) , which store data for all data from pg.                     
